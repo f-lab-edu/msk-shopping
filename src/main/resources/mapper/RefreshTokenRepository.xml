@@ -1,0 +1,64 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.flab.msk_shopping.auth.jwt.repository.RefreshTokenRepository">
+
+    <insert id="addRefreshToken">
+        INSERT INTO refresh_token (user_id, token_value, expiration)
+        VALUES (#{userId}, #{tokenValue}, #{expiration})
+    </insert>
+
+    <delete id="deleteRefreshTokenByUserId">
+        DELETE
+        FROM refresh_token
+        WHERE user_id = #{userId}
+    </delete>
+    <delete id="deleteRefreshTokenByTokenValue">
+        DELETE
+        FROM refresh_token
+        WHERE token_value = #{refreshToken}
+    </delete>
+
+
+    <select id="findRefreshTokenByTokenValue"
+            resultType="com.flab.msk_shopping.auth.jwt.controller.dto.RefreshTokenDto">
+        SELECT
+            member_id AS memberId,
+            token_value AS tokenValue,
+            expiration
+        FROM refresh_token
+        WHERE token_value = #{refreshToken}
+    </select>
+
+    <select id="findRefreshTokenByUserId"
+            resultType="com.flab.msk_shopping.auth.jwt.controller.dto.RefreshTokenDto">
+        SELECT
+            user_id AS userId,
+            token_value AS tokenValue,
+            expiration
+        FROM refresh_token
+        WHERE user_id = #{userId}
+    </select>
+
+    <!--    &lt;!&ndash; Select statement &ndash;&gt;-->
+    <!--    <select id="findUserById" parameterType="int" resultType="User">-->
+    <!--        SELECT * FROM users WHERE id = #{id}-->
+    <!--    </select>-->
+
+    <!--    &lt;!&ndash; Insert statement &ndash;&gt;-->
+    <!--    <insert id="insertUser" parameterType="User">-->
+    <!--        INSERT INTO users (name, email) VALUES (#{name}, #{email})-->
+    <!--    </insert>-->
+
+    <!--    &lt;!&ndash; Update statement &ndash;&gt;-->
+    <!--    <update id="updateUser" parameterType="User">-->
+    <!--        UPDATE users SET name = #{name}, email = #{email} WHERE id = #{id}-->
+    <!--    </update>-->
+
+    <!--    &lt;!&ndash; Delete statement &ndash;&gt;-->
+    <!--    <delete id="deleteUser" parameterType="int">-->
+    <!--        DELETE FROM users WHERE id = #{id}-->
+    <!--    </delete>-->
+
+</mapper>
