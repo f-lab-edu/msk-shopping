@@ -1,0 +1,62 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.flab.msk_shopping.auth.jwt.repository.UserRepository">
+
+<!--    public User findUserByEmail(@Param("userEmail") String userEmail);-->
+<!--    public User findUserById(@Param("userId") Long userId);-->
+<!--    public User findUserByUserId(@Param("userId") String userId);-->
+<!--    public void addUser(User user);-->
+<!--    public void deleteUser(@Param("userId") Long userId);-->
+<!--    public User findUserByAccessToken(@Param("accessToken") String accessToken);-->
+<!--    public User findUserByNickName(@Param("nickName") String nickName);-->
+
+    <insert id="addUser" parameterType="com.flab.msk_shopping.auth.jwt.domain.User">
+        INSERT INTO USERS (PASSWORD, EMAIL, NICK_NAME, IS_ADMIN)
+        VALUES (#{password}, #{email}, #{nickName}, #{isAdmin})
+    </insert>
+
+    <insert id="addRefreshToken">
+        INSERT INTO refresh_token (member_id, token_value, expiration)
+        VALUES (#{memberId}, #{tokenValue}, #{expiration})
+    </insert>
+
+    <delete id="deleteUser">
+        DELETE
+        FROM user
+        WHERE user_id = #{userId}
+    </delete>
+
+    <select id="findUserById"
+            resultType="com.flab.msk_shopping.auth.jwt.domain.User">
+        SELECT * FROM USERS WHERE USER_ID=#{userId}
+    </select>
+
+    <select id="findUserByEmail"
+            resultType="com.flab.msk_shopping.auth.jwt.domain.User">
+        SELECT * FROM USERS WHERE EMAIL=#{email}
+    </select>
+
+    <select id="findRefreshTokenByTokenValue"
+            resultType="com.flab.msk_shopping.auth.jwt.controller.dto.RefreshTokenDto">
+        SELECT
+            member_id AS memberId,
+            token_value AS tokenValue,
+            expiration
+        FROM refresh_token
+        WHERE token_value = #{refreshToken}
+    </select>
+
+    <select id="findRefreshTokenByMemberId"
+            resultType="com.flab.msk_shopping.auth.jwt.controller.dto.RefreshTokenDto">
+        SELECT
+            member_id AS memberId,
+            token_value AS tokenValue,
+            expiration
+        FROM refresh_token
+        WHERE token_value = #{memberId}
+    </select>
+
+
+</mapper>
