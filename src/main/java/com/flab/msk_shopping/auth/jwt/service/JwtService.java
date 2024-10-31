@@ -12,6 +12,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -31,21 +32,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class JwtService {
 
     //질문 : 생성자 패턴으로 어떻게 바꾸지?
+    private final RefreshTokenRepository refreshTokenRepository;
 
-    @Autowired
-    RefreshTokenRepository refreshTokenRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    UserRepository userRepository;
+    private final JwtProvider jwtProvider;
 
-    @Autowired
-    JwtProvider jwtProvider;
-
-    @Autowired
-    RedisRepository redisRepository;
+    private final RedisRepository redisRepository;
 
     @Value("${jwt.sign_in.password.salt}")
     private String passwordSalt;
