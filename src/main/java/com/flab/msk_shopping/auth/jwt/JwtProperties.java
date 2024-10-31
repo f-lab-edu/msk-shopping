@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-@PropertySource("classpath:application-jwt.properties")
+@PropertySource("classpath:application.yml")
 public class JwtProperties {
     @Value("${jwt.issuer}")
     private String issuer;

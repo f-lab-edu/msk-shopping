@@ -1,22 +1,18 @@
 package com.flab.msk_shopping.auth.jwt.repository;
 
-import com.flab.msk_shopping.auth.jwt.controller.dto.RefreshTokenDto;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import com.flab.msk_shopping.auth.jwt.domain.RefreshToken;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Mapper
-public interface RefreshTokenRepository {
+@Repository
+public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long> {
 
     // 회원의 아이디로 리프레시 토큰 찾기
-    RefreshTokenDto findRefreshTokenByUserId(@Param("userId") Long userId);
-
-    // 리프레시 토큰 추가
-    void addRefreshToken(RefreshTokenDto refreshToken);
+    RefreshToken findRefreshTokenByUserId(Long userId);
 
     // 리프레시 토큰 지우기
-    void deleteRefreshTokenByUserId(@Param("userId") Long userId);
+    void deleteByUserId(Long userId);
 
-    public void deleteRefreshTokenByTokenValue(String refreshToken);
+    void deleteRefreshTokenByTokenValue(String refreshToken);
 
 }

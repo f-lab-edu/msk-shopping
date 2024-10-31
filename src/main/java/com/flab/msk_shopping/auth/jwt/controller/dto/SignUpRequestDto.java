@@ -16,8 +16,7 @@ public class SignUpRequestDto {
     private String email;
     @NotEmpty
     private String password;
-    @NotEmpty
-    private String nickname;
+
     @NotEmpty
     private Boolean isAdmin;
 
@@ -26,11 +25,9 @@ public class SignUpRequestDto {
     public SignUpRequestDto() {
     }
 
-
-    public SignUpRequestDto(String email, String password, String nickname, Boolean isAdmin) {
+    public SignUpRequestDto(String email, String password, Boolean isAdmin) {
         this.email = email;
         this.password = password;
-        this.nickname = nickname;
         this.isAdmin = isAdmin;
     }
 }

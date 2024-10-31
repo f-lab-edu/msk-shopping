@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: msk-shopping
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/msk_shop
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 1234
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        # sout 으로 출력함
+        #    # show_sql: true
+        format_sql: true
+  #        default_batch_fetch_size: 10
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mapper/*.xml
+
+#sql:
+#  init:
+#    mode: always
+
+jwt:
+  issuer: minseong.kim7000@gmail.com
+  secret_key: msk-shopping-flab-education-project
+  sign_in:
+    password:
+      salt: flab

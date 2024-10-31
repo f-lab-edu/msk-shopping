@@ -1,27 +1,16 @@
 package com.flab.msk_shopping.auth.jwt.domain;
 
+import lombok.Getter;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
-
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@Getter
 public class JwtToken {
-    private String accessToken;
-    private String refreshToken;
 
-    //==Constructor==//
+    String accessToken;
+    String refreshToken;
+
     public JwtToken(String accessToken, String refreshToken) {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
     }
 
-    //==Getter==//
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public String getRefreshToken() {
-        return refreshToken;
-    }
-
-  }
+}

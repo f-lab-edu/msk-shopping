@@ -1,9 +1,6 @@
 package com.flab.msk_shopping.auth.jwt;
 
-import com.flab.msk_shopping.auth.jwt.controller.dto.AccessTokenDto;
-import com.flab.msk_shopping.auth.jwt.controller.dto.RefreshTokenDto;
-import com.flab.msk_shopping.auth.jwt.domain.JwtToken;
-import com.flab.msk_shopping.auth.jwt.repository.AccessTokenRepository;
+import com.flab.msk_shopping.auth.jwt.domain.RefreshToken;
 import com.flab.msk_shopping.auth.jwt.repository.RefreshTokenRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -14,6 +11,8 @@ import org.springframework.stereotype.Component;
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,7 +21,7 @@ import java.util.Map;
 @Component
 public class JwtProvider {
     public static final long ACCESSTOKEN_TIME = 1000 * 60 * 30; // 30분
-    public static final long REFRESHTOKEN_TIME = 1000 * 60 * 60 * 24 * 14; // 2주
+    public static final long REFRESHTOKEN_TIME = 1000 * 60 * 60 * 24; // 1일
     public static final String ACCESS_PREFIX_STRING = "Bearer ";
     public static final String ACCESS_HEADER_STRING = "Authorization";
     public static final String REFRESH_HEADER_STRING = "RefreshToken";
@@ -32,23 +31,15 @@ public class JwtProvider {
     private static String keyBase64Encoded; // properties에 정의된 값
     private static SecretKey signingKey;
 
-    private final AccessTokenRepository accessTokenRepository;
     private final RefreshTokenRepository refreshTokenRepository;
 
     public JwtProvider(@Value("${jwt.secret_key}") String keyParam,
-                       AccessTokenRepository accessTokenRepository, RefreshTokenRepository refreshTokenRepository) {
+                       RefreshTokenRepository refreshTokenRepository) {
         key = keyParam;
-//        keyBase64Encoded = Base64.getEncoder().encodeToString(key.getBytes());
         signingKey = Keys.hmacShaKeyFor(key.getBytes());
-//        new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
-//        Keys.hmacShaKeyFor(keyParam);
-
-        this.accessTokenRepository = accessTokenRepository;
         this.refreshTokenRepository = refreshTokenRepository;
 
     }
-
-    //==Getter==//
 
     public String getKey() {
         return key;
@@ -59,20 +50,7 @@ public class JwtProvider {
         return signingKey;
     }
 
-    /**
-     * @return JWT Token(액세스 토큰 + 리프레시 토큰)
-     */
-    public JwtToken createJwtToken(Long userId, String nickname, Boolean isAdmin) {
-        String accessToken = createAccessToken(userId, nickname, isAdmin);
-        String refreshToken = createRefreshToken(userId);
 
-        return new JwtToken(accessToken, refreshToken);
-    }
-
-    /**
-     * 리프레시 토큰으로 액세스 토큰 재발급 요청이 왔을 때 호출됩니다.
-     * @return 액세스 토큰
-     */
     public String createAccessToken(Long userId, String nickname, Boolean isAdmin) {
         Map<String, Object> claims = new HashMap<>();
 
@@ -81,6 +59,7 @@ public class JwtProvider {
         claims.put("isAdmin", Boolean.toString(isAdmin));
 
         Date expiration = new Date(System.currentTimeMillis() + ACCESSTOKEN_TIME);
+        System.out.println("expiration = " + expiration);
 
         String accessToken = ACCESS_PREFIX_STRING + Jwts.builder()
                 .subject(Long.toString(userId))
@@ -90,20 +69,18 @@ public class JwtProvider {
                 .compact();
 
         // 액세스 토큰을 DB에 저장
-        accessTokenRepository.deleteAccessTokenByUserId(userId);
-        accessTokenRepository.addAccessToken(new AccessTokenDto(userId, accessToken, expiration));
 
         return accessToken;
     }
 
     /**
-     * 외부에서 호출될 수 없습니다.
+     * //질문 : 외부에서 호출될 수 없습니다. -> 이런게 필요한 이유가 뭔지? 좋은 코딩 인가요?
      * @return 리프레시 토큰
      */
-    private String createRefreshToken(Long userId) {
+    public String createRefreshToken(Long userId) {
         Date expiration = new Date(System.currentTimeMillis() + REFRESHTOKEN_TIME);
 
-        String refreshToken = Jwts.builder()
+        String refreshTokenValue = Jwts.builder()
                 .subject(Long.toString(userId))
                 .claim("userId", userId)
                 .expiration(expiration)
@@ -111,10 +88,10 @@ public class JwtProvider {
                 .compact();
 
         // 리프레시 토큰을 DB에 저장
-        refreshTokenRepository.deleteRefreshTokenByUserId(userId);
-        refreshTokenRepository.addRefreshToken(new RefreshTokenDto(userId, refreshToken, expiration));
+        refreshTokenRepository.deleteByUserId(userId);
+        refreshTokenRepository.save(new RefreshToken(refreshTokenValue, userId, expiration));
 
-        return refreshToken;
+        return refreshTokenValue;
     }
 
     /**
