@@ -15,6 +15,7 @@ public class CouponPolicy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
     private int totalQuantity;
     private String type;
     private Date eventEndAt;
@@ -22,7 +23,8 @@ public class CouponPolicy {
     protected CouponPolicy() {
     }
 
-    public CouponPolicy(int totalQuantity, String type, Date eventEndAt) {
+    public CouponPolicy(String name, int totalQuantity, String type, Date eventEndAt) {
+        this.name = name;
         this.totalQuantity = totalQuantity;
         this.type = type;
         this.eventEndAt = eventEndAt;

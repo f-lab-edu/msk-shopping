@@ -135,7 +135,7 @@ public class JwtProvider {
     }
 
 
-    public static boolean verifySignature(String token) {
+    public boolean verifySignature(String token) {
 
         String[] parts = token.split("\\."); // Split by the period character
 

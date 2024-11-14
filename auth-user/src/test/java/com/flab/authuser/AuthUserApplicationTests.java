@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 @SpringBootTest
 class AuthUserApplicationTests {
 
@@ -104,5 +107,11 @@ class AuthUserApplicationTests {
 		}).isInstanceOf(RuntimeException.class).hasMessage("블랙리스트 리프레시 토큰입니다.");
 
 	}
+
+//	@Test
+//	void print(){
+//		System.out.println(new Date());
+//		System.out.println(LocalDateTime.now());
+//	}
 
 }

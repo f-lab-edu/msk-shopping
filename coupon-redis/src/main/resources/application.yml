@@ -1,20 +1,21 @@
 server:
-  port: 8080
+  port: 8084
 spring:
-  application:
-    name: msk-shopping
+#  application:
+#    name: msk-shopping
   datasource:
     url: jdbc:h2:tcp://localhost/~/msk_shop
     driver-class-name: org.h2.Driver
     username: sa
     password: 1234
+
   jpa:
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
         # sout 으로 출력함
-        #    # show_sql: true
+#        show_sql: true
         format_sql: true
   #        default_batch_fetch_size: 10
   h2:
@@ -30,11 +31,11 @@ spring:
 #  configuration:
 #    map-underscore-to-camel-case: true
 #  mapper-locations: classpath:mapper/*.xml
-
-#sql:
-#  init:
-#    mode: always
-
+#
+##sql:
+##  init:
+##    mode: always
+#
 jwt:
   issuer: minseong.kim7000@gmail.com
   secret_key: msk-shopping-flab-education-project
