@@ -1,10 +1,10 @@
 package com.flab.authuser.auth.jwt.service;
 
-import com.flab.authuser.auth.jwt.JwtProvider;
 import com.flab.authuser.auth.jwt.controller.dto.SignUpRequestDto;
-import com.flab.authuser.auth.jwt.domain.JwtToken;
-import com.flab.authuser.auth.jwt.domain.RefreshToken;
 import com.flab.authuser.auth.jwt.domain.User;
+import com.flab.authuser.auth.jwt.jwt.JwtProvider;
+import com.flab.authuser.auth.jwt.jwt.entity.JwtToken;
+import com.flab.authuser.auth.jwt.jwt.entity.RefreshToken;
 import com.flab.authuser.auth.jwt.repository.RedisRepository;
 import com.flab.authuser.auth.jwt.repository.RefreshTokenRepository;
 import com.flab.authuser.auth.jwt.repository.UserRepository;
@@ -15,12 +15,8 @@ import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

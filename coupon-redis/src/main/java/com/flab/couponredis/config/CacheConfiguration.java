@@ -2,6 +2,8 @@ package com.flab.couponredis.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -16,6 +18,7 @@ import java.time.Duration;
 
 @RequiredArgsConstructor
 @Configuration
+@EnableCaching
 public class CacheConfiguration {
 
     private final RedisConnectionFactory redisConnectionFactory;

@@ -9,3 +9,5 @@ rootProject.name = 'msk-shopping'
 
 include 'coupon-redis'
 include 'auth-user' // new module
+include 'global-utils'
+

@@ -36,6 +36,7 @@ subprojects {
 
 
 	dependencies {
+
 		implementation 'org.springframework.boot:spring-boot-starter-web'
 		compileOnly 'org.projectlombok:lombok'
 		runtimeOnly 'com.h2database:h2:2.2.224'
@@ -52,7 +53,7 @@ subprojects {
 		implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
 		implementation("org.springframework.boot:spring-boot-starter-data-redis")
 		implementation("org.redisson:redisson-spring-boot-starter:3.16.4")
-
+		implementation("io.micrometer:micrometer-registry-prometheus")
 
 	}
 
@@ -61,6 +62,19 @@ subprojects {
 		useJUnitPlatform()
 	}
 }
+
+project(":auth-user") {
+	dependencies {
+		implementation project(":global-utils")
+	}
+}
+
+project(":coupon-redis") {
+	dependencies {
+		implementation project(":global-utils")
+	}
+}
+
 
 bootJar.enabled = false
 

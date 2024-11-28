@@ -2,30 +2,37 @@ package com.flab.couponredis.service;
 
 import com.flab.couponredis.entity.Coupon;
 import com.flab.couponredis.entity.CouponPolicy;
+import com.flab.couponredis.repository.CouponPolicyRepository;
 import com.flab.couponredis.repository.CouponRedisRepository;
 import com.flab.couponredis.repository.CouponRepository;
 import lombok.RequiredArgsConstructor;
 import org.redisson.api.RQueue;
 import org.redisson.api.RSet;
 import org.redisson.api.RedissonClient;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
 public class CouponRedisService {
     private final RedissonClient redisson;
     private final CouponRepository couponRepository;
-//    CouponRedisRepository couponRedisRepository;
+    private final CouponPolicyRepository couponPolicyRepository;
+
     public boolean issuableChk(Long userId, CouponPolicy couponPolicy) {
-        RSet<String> couponSet =  redisson.getSet(couponPolicy.getName());
+
+        // 유효기간 체크
+        if (!new Date().before(couponPolicy.getEventEndAt())) {
+            throw new RuntimeException("쿠폰 발행 가능 기간이 지난 쿠폰정책입니다");
+        }
+
+        RQueue<String> couponSet =  redisson.getQueue(couponPolicy.getName());
+//        RSet<String> couponSet =  redisson.getSet(couponPolicy.getName());
         int size = couponSet.size();
         if (size >= couponPolicy.getTotalQuantity()) {
             throw new RuntimeException("발급 가능 수량을 초과했습니다");
@@ -36,7 +43,8 @@ public class CouponRedisService {
     }
 
     public void addQueue(Long userId, CouponPolicy couponPolicy) {
-        RSet<String> couponSet = redisson.getSet(couponPolicy.getName());
+//        RSet<String> couponSet = redisson.getSet(couponPolicy.getName());
+        RQueue<String> couponSet = redisson.getQueue(couponPolicy.getName());
         RQueue<String> queue = redisson.getQueue("couponQueue");
 //        RQueue<Coupon> queue = redisson.getQueue("couponQueue");
 
@@ -73,5 +81,22 @@ public class CouponRedisService {
 //            coupons.add(queue.poll());
         }
         couponRepository.saveAll(coupons);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
+
+    @Cacheable(cacheNames = "couponPolicy", key = "#couponPolicyId")
+    public CouponPolicy getCouponPolicy(Long couponPolicyId) {
+        Optional<CouponPolicy> couponPolicy = couponPolicyRepository.findById(couponPolicyId);
+        System.out.println("couponPolicy.toString() = " + couponPolicy.toString());
+        if (couponPolicy.isPresent()) {
+            return couponPolicy.get();
+        } else {
+            throw new RuntimeException("not existing coupon Policy number");
+        }
+    }
+
 }

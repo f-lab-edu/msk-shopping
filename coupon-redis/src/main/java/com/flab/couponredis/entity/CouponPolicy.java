@@ -29,4 +29,15 @@ public class CouponPolicy {
         this.type = type;
         this.eventEndAt = eventEndAt;
     }
+
+    @Override
+    public String toString() {
+        return "CouponPolicy{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", totalQuantity=" + totalQuantity +
+                ", type='" + type + '\'' +
+                ", eventEndAt=" + eventEndAt +
+                '}';
+    }
 }

@@ -1,6 +1,6 @@
 package com.flab.authuser.auth.jwt.repository;
 
-import com.flab.authuser.auth.jwt.domain.RefreshToken;
+import com.flab.authuser.auth.jwt.jwt.entity.RefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
