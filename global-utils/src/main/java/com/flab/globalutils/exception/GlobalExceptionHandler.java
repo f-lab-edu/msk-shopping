@@ -1,4 +1,4 @@
-package com.flab.authuser.auth.jwt.exception;
+package com.flab.globalutils.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;

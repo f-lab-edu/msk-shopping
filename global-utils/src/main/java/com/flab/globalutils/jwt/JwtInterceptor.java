@@ -1,4 +1,4 @@
-package com.flab.authuser.auth.jwt.jwt;
+package com.flab.globalutils.jwt;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

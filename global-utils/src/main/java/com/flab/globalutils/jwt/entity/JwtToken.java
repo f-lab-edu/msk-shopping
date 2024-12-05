@@ -1,4 +1,4 @@
-package com.flab.authuser.auth.jwt.jwt.entity;
+package com.flab.globalutils.jwt.entity;
 
 import lombok.Getter;
 

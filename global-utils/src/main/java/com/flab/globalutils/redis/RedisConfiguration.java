@@ -1,4 +1,4 @@
-package com.flab.authuser.auth.jwt.redis;
+package com.flab.globalutils.redis;
 
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;

@@ -1,6 +1,6 @@
-package com.flab.authuser.auth.jwt.jwt.config;
+package com.flab.globalutils.jwt.config;
 
-import com.flab.authuser.auth.jwt.jwt.JwtInterceptor;
+import com.flab.globalutils.jwt.JwtInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

@@ -1,4 +1,4 @@
-package com.flab.authuser.auth.jwt.jwt;
+package com.flab.globalutils.jwt;
 
 import com.flab.authuser.auth.jwt.jwt.entity.RefreshToken;
 import com.flab.authuser.auth.jwt.repository.RefreshTokenRepository;

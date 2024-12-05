@@ -1,4 +1,4 @@
-package com.flab.authuser.auth.jwt.jwt;
+package com.flab.globalutils.jwt;
 
 
 import org.springframework.beans.factory.annotation.Value;

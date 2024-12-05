@@ -2,6 +2,8 @@ package com.flab.authuser.auth.jwt.controller;
 import com.flab.authuser.auth.jwt.controller.dto.SignUpRequestDto;
 import com.flab.authuser.auth.jwt.service.JwtService;
 import com.flab.authuser.auth.jwt.controller.dto.LoginRequestDto;
+import com.flab.globalutils.jwt.entity.JwtToken;
+import com.flab.globalutils.response.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

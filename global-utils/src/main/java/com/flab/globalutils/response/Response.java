@@ -1,4 +1,4 @@
-package com.flab.authuser.auth.jwt.response;
+package com.flab.globalutils.response;
 
 import com.flab.authuser.auth.jwt.exception.ErrorCode;
 
