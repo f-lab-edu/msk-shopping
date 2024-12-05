@@ -63,18 +63,22 @@ subprojects {
 	}
 }
 
-project(":auth-user") {
+project(':auth-user') {
 	dependencies {
-		implementation project(":global-utils")
+		implementation project(':global-utils')
 	}
 }
 
-project(":coupon-redis") {
+project(':coupon-redis') {
 	dependencies {
-		implementation project(":global-utils")
+		implementation project(':global-utils')
 	}
 }
 
+project(':global-utils') { // multi-module-databse는 bootJar로 패키징 할 필요 없음
+	bootJar { enabled = false }
+	jar { enabled = false }
+}
 
 bootJar.enabled = false
 
