@@ -1,0 +1,70 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: msk-shopping-coupon-redis
+  datasource:
+#    url: jdbc:h2:tcp://localhost/~/msk_shop
+#    driver-class-name: org.h2.Driver
+#    username: sa
+#    password: 1234
+    hikari:
+      jdbc-url: jdbc:mysql://localhost:3306/coupon?useUnicode=yes&characterEncoding=UTF-8&rewriteBatchedStatements=true
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      maximum-pool-size: 10
+      max-lifetime: 30000
+      connection-timeout: 3000
+      username: abcd
+      password: 1234
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        # sout 으로 출력함
+#        show_sql: true
+        format_sql: true
+  #        default_batch_fetch_size: 10
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2-console
+  data:
+    redis:
+      host: localhost
+      port: 6380
+
+#mybatis:
+#  configuration:
+#    map-underscore-to-camel-case: true
+#  mapper-locations: classpath:mapper/*.xml
+#
+##sql:
+##  init:
+##    mode: always
+#
+jwt:
+  issuer: minseong.kim7000@gmail.com
+  secret_key: msk-shopping-flab-education-project
+  sign_in:
+    password:
+      salt: flab
+
+logging:
+  level:
+    org:
+      springframework:
+        cache: DEBUG
+        data:
+          redis:
+            cache: DEBUG
+
+management:
+  metrics:
+    tags:
+      application:
+        ${spring.application.name}
+  endpoints:
+    web:
+      exposure:
+        include: prometheus

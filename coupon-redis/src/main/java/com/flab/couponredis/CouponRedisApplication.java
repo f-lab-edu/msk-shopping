@@ -1,0 +1,15 @@
+package com.flab.couponredis;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
+
+@EnableScheduling
+@SpringBootApplication(scanBasePackages = {"com.flab"})
+public class CouponRedisApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(CouponRedisApplication.class, args);
+    }
+
+}

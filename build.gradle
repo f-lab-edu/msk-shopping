@@ -1,0 +1,82 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.5'
+	id 'io.spring.dependency-management' version '1.1.6'
+
+}
+
+allprojects {
+	group = 'com.flab'
+	version = '0.0.1-SNAPSHOT'
+
+	repositories {
+		mavenCentral()
+		maven { url 'https://repo.spring.io/milestone' }
+		maven { url 'https://repo.spring.io/snapshot' }
+	}
+}
+
+subprojects {
+	apply plugin: 'java-library'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+
+	java {
+		toolchain {
+			languageVersion = JavaLanguageVersion.of(23)
+		}
+	}
+
+	configurations {
+		compileOnly {
+			extendsFrom annotationProcessor
+		}
+	}
+
+
+
+	dependencies {
+
+		implementation 'org.springframework.boot:spring-boot-starter-web'
+		compileOnly 'org.projectlombok:lombok'
+		runtimeOnly 'com.h2database:h2:2.2.224'
+		annotationProcessor 'org.projectlombok:lombok'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+		implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+		runtimeOnly 'mysql:mysql-connector-java:8.0.28'
+		implementation 'org.springframework.boot:spring-boot-starter-validation'
+		implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
+		runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.3'
+		runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+		implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+		implementation("org.springframework.boot:spring-boot-starter-data-redis")
+		implementation("org.redisson:redisson-spring-boot-starter:3.16.4")
+		implementation("io.micrometer:micrometer-registry-prometheus")
+
+	}
+
+
+	tasks.named('test') {
+		useJUnitPlatform()
+	}
+}
+
+project(":auth-user") {
+	dependencies {
+		implementation project(":global-utils")
+	}
+}
+
+project(":coupon-redis") {
+	dependencies {
+		implementation project(":global-utils")
+	}
+}
+
+
+bootJar.enabled = false
+
+
+

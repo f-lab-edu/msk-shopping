@@ -1,0 +1,17 @@
+{
+	"ulid": "01JEAC55525JF9TPX2TW1660ZY",
+	"minTime": 1732852800000,
+	"maxTime": 1732860000000,
+	"stats": {
+		"numSamples": 65540,
+		"numSeries": 315,
+		"numChunks": 945
+	},
+	"compaction": {
+		"level": 1,
+		"sources": [
+			"01JEAC55525JF9TPX2TW1660ZY"
+		]
+	},
+	"version": 1
+}
