@@ -9,6 +9,15 @@ services:
       - "mode=standalone"
     ports:
       - 6380:6380
+
+  redis-exporter:
+    image: oliver006/redis_exporter
+    ports:
+      - 9121:9121
+    environment:
+      REDIS_ADDR: "redis:6380"
+      REDIS_USER: null
+
   mysql:
     container_name: coupon-mysql
     image: ubuntu/mysql:edge

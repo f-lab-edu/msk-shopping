@@ -31,11 +31,11 @@ class CouponIssueV1(FastHttpUser):
     @task
     def issue(self):
         payload = {
-            "userId": 4,
+            "userId": 9,
             "couponPolicyId": 2
         }
         headers = {
-            "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0Iiwibmlja25hbWUiOiJhYmNkQG5hdmVyLmNvbSIsImlzQWRtaW4iOiJ0cnVlIiwidXNlcklkIjo0LCJleHAiOjE3MzI3ODQxNzB9.2MflgcFch1XJycyXpApMbIIqqt7wa2HHPyQLlGue3BU",
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5Iiwibmlja25hbWUiOiJhYmNkQG5hdmVyLmNvbSIsImlzQWRtaW4iOiJ0cnVlIiwidXNlcklkIjo5LCJleHAiOjE3MzMzODIxMDV9.V-nbG1eAcHwvMwr1_j3SWNRa41u-sDXTBy5jyvRluW",
             "Content-Type": "application/json"  # Recommended to include this
         }
         response = self.client.post("/coupon/issue", json=payload, headers=headers)
