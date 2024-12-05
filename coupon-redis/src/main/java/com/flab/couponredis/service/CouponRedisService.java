@@ -3,18 +3,15 @@ package com.flab.couponredis.service;
 import com.flab.couponredis.entity.Coupon;
 import com.flab.couponredis.entity.CouponPolicy;
 import com.flab.couponredis.repository.CouponPolicyRepository;
-import com.flab.couponredis.repository.CouponRedisRepository;
 import com.flab.couponredis.repository.CouponRepository;
 import lombok.RequiredArgsConstructor;
 import org.redisson.api.RQueue;
-import org.redisson.api.RSet;
 import org.redisson.api.RedissonClient;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -67,8 +64,6 @@ public class CouponRedisService {
 
     public void chkQueueAndIssue(){
         RQueue<String> queue = redisson.getQueue("couponQueue");
-//        RQueue<Coupon> queue = redisson.getQueue("couponQueue");
-//        Coupon coupon = new Coupon(userId, couponPolicy.getId(), new Date());
         ArrayList<Coupon> coupons = new ArrayList<>();
         while(!queue.isEmpty()){
             String queueItem = queue.poll();
